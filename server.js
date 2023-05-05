@@ -15,36 +15,108 @@ const server = app.listen(port, () => {
 
 // READ (HTTP method GET) at root endpoint /app/
 app.get('/app/', (req, res, next) => {
-    res.status(200).setHeader('Content-Type', 'text/plain').send('200 OK');
+    res.status(200)
+    .setHeader('Content-Type', 'text/plain')
+    .send('200 OK');
 });
 
+// RPS
 app.get('/app/rps/', (req, res) => {
+    var result = JSON.stringify(rps())
     res.status(200)
     .setHeader('Content-Type', 'application/json')
-    .send('{"player":"(rock|paper|scissors)"}');
+    .send(result);
 });
-
-app.get('/app/rpsls/', (req, res) => {
-    res.status(200)
-    .setHeader('Content-Type', 'application/json')
-    .send(JSON.stringify(rpsls()));
-});
-
+// URLEncoded data body rps:
 app.get('/app/rps/play', (req, res) => {
     const shot = req.query.shot;
+    try{
+        var result = JSON.stringify(rps(shot));
+    }
+    catch {
+        result = `${shot} is out of range.`
+    }
     res.status(200)
     .setHeader('Content-Type', 'application/json')
-    .send(JSON.stringify(rps(shot)));
+    .send(result);
 });
-  
+// JSON data body rps:
 app.post('/app/rps/play', express.json(), (req, res) => {
     const shot = req.body.shot;
+    try{
+        var result = JSON.stringify(rps(shot));
+    }
+    catch {
+        result = `${shot} is out of range.`
+    }
     res.status(200)
     .setHeader('Content-Type', 'application/json')
-    .send(JSON.stringify(rps(shot)));
+    .send(result);
+});
+// Parameter endpoint rps:
+app.get('/app/rps/play/:shot', (req, res) => {
+    const shot = req.params.shot;
+    try{
+        var result = JSON.stringify(rps(shot));
+    }
+    catch {
+        result = `${shot} is out of range.`
+    }
+    res.status(200)
+    .setHeader('Content-Type', 'application/json')
+    .send(result);
 });
 
+// RPSLS
+app.get('/app/rpsls/', (req, res) => {
+    var result = JSON.stringify(rpsls())
+    res.status(200)
+    .setHeader('Content-Type', 'application/json')
+    .send(result);
+});
+// URLEncoded data body rpsls:
+app.get('/app/rpsls/play', (req, res) => {
+    const shot = req.query.shot;
+    try{
+        var result = JSON.stringify(rpsls(shot));
+    }
+    catch {
+        result = `${shot} is out of range.`
+    }
+    res.status(200)
+    .setHeader('Content-Type', 'application/json')
+    .send(result);
+});
+// JSON data body rpsls:
+app.post('/app/rpsls/play', express.json(), (req, res) => {
+    const shot = req.body.shot;
+    try{
+        var result = JSON.stringify(rpsls(shot));
+    }
+    catch {
+        result = `${shot} is out of range.`
+    }
+    res.status(200)
+    .setHeader('Content-Type', 'application/json')
+    .send(result);
+});
+// Parameter endpoint rpsls:
+app.get('/app/rpsls/play/:shot', (req, res) => {
+    const shot = req.params.shot;
+    try{
+        var result = JSON.stringify(rpsls(shot));
+    }
+    catch {
+        result = `${shot} is out of range.`
+    }
+    res.status(200)
+    .setHeader('Content-Type', 'application/json')
+    .send(result);
+});
+
+// Nonexistent endpoint
 app.use(function(req, res){
-	res.json({"message":"Endpoint not found. (404)"});
-    res.status(404);
+    res.status(404)
+    .setHeader('Content-Type', 'text/plain')
+    .send('404 NOT FOUND');
 });
