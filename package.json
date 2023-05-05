@@ -1,0 +1,16 @@
+{
+  "name": "a04-nathan-webserver",
+  "version": "0.0.1",
+  "description": "This package contains a web server for a04.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "node server.js --port=5555"
+  },
+  "author": "nathann07",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "express": "^4.18.2",
+    "minimist": "^1.2.8"
+  }
+}
